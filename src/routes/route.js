@@ -7,13 +7,20 @@ const BookController= require("../controllers/bookController")
 router.get("/test-me", function (req, res) {
     res.send("My first ever api!")
 })
-
-router.post("/createUser", UserController.createUser  )
-
-router.get("/getUsersData", UserController.getUsersData)
-
 router.post("/createBook", BookController.createBook  )
+router.get("/bookList", BookController.getBookList)
+router.post("/booksInYear",BookController.booksYear)
+router.get("/paticularBooks",BookController.getPaticularBooks)
+router.get("/INRBooks", BookController.getInrBooks)
+router.get("/randomBooks",BookController.getRandomBooks)
 
-router.get("/getBooksData", BookController.getBooksData)
+
+// router.post("/createUser", UserController.createUser  )
+
+// router.get("/getUsersData", UserController.getUsersData)
+
+// router.post("/createBook", BookController.createBook  )
+
+// router.get("/getBooksData", BookController.getBooksData)
 
 module.exports = router;
