@@ -65,7 +65,7 @@ const updateBlog = async (req, res) => {
         // }
         // data.updatedAt = moment().format()
         const updatedBlog = await blogModel.findOneAndUpdate({_id: id}, data, {new: true})
-        return res.status(204).send({status: true, msg: updatedBlog})
+        return res.status(201).send({status: true, msg: updatedBlog})
     }catch(e){
         res.status(400).send({status: false, msg: e.message})
     }
