@@ -14,6 +14,7 @@ const createAuthor = async (req, res) => {
 }
 
 const login = async function (req, res){
+    try{
     const {emailId, password} = req.body
     const user = await authorModel.findOne({emailId: emailId, password: password})
     if (!user){
@@ -22,9 +23,10 @@ const login = async function (req, res){
     const token = jwt.sign({id: user._id, name: user.firstName, myName: "rohan"}, "projectOne")
     res.setHeader("x-api-key", token)
     res.status(201).send({status: true, token: token})
-  }
-  
-
+  }catch(e){
+        res.status(400).send({status: false, msg: e.message})
+    }
+}
 
 
 
