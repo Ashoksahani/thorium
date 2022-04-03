@@ -1,29 +1,32 @@
-const express = require("express")
-const mongoose = require("mongoose")
-
+const express = require('express')
 const router = express.Router()
 
-const authorController = require("../controller/authorController")
-const blogController = require("../controller/blogController")
-const mw = require("../middleWare/auth")
+const userController = require('../controller/userController')
+const bookController = require('../controller/booksController')
+const reviewController = require('../controller/reviewController')
+const { authentication, authorize } = require('../middleware/auth')
 
-//for test
-router.get("/test", (req, res) =>{
-    const bodydata = req.body
-    const querydata = req.query
-    res.send({msg: "yeeeyyyy its working !!!!!!!!!!!", body: bodydata, query: querydata})
-})
 
-// for author
-router.post("/authors", authorController.createAuthor)
-router.post("/login", authorController.login)
 
-// for blog
-router.post("/blogs",mw.authentication,blogController.createBlog)
-router.get("/blogs",mw.authentication, blogController.getBlog)
-router.put("/blogs/:blogId", mw.authentication,mw.authroisation1,blogController.updateBlog)
-router.delete("/blogs/:blogId", mw.authentication, mw.authroisation1,blogController.deleteBlogById)
-router.delete("/blogs", mw.authentication, mw.authroisation2,blogController.deleteBlogBykey)
+//user Api
+router.post('/register', userController.createUser)
+router.post('/login', userController.loginUser)
+//book api
+router.post('/books', authentication, bookController.createBook)
+router.get('/books', authentication, bookController.getBooks)
+router.get('/books/:bookId', authentication, bookController.getBookReview)
+router.put('/books/:bookId', authentication, authorize, bookController.updateBook)
+router.delete('/books/:bookId', authentication, authorize, bookController.deleteBook)
+//review api
+router.post('/books/:bookId/review', reviewController.createReview)
+router.put('/books/:bookId/review/:reviewId', reviewController.reviewUpdate)
+router.delete('/books/:bookId/review/:reviewId', reviewController.reviewDelete)
+
+
+
+
+
+
 
 
 module.exports = router
